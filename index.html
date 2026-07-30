@@ -114,6 +114,9 @@
   <div class="modal-backdrop hidden" id="monthlyReportModal" role="dialog" aria-modal="true" aria-labelledby="monthlyReportTitle">
     <div class="modal-card wide-card monthly-report-card"><button class="modal-close" data-close="monthlyReportModal" type="button">×</button><p class="eyebrow">Comptabilité</p><h2 id="monthlyReportTitle">Rapport mensuel des ventes</h2><p class="modal-note">Les ventes remboursées et annulées sont automatiquement exclues du rapport.</p><label class="form-label">Mois à exporter<input id="reportMonth" type="month" /></label><div class="monthly-report-preview" id="monthlyReportPreview"></div><div class="receipt-actions"><button class="secondary-action" data-close="monthlyReportModal" type="button">Fermer</button><button class="confirm-payment" id="printMonthlyReport" type="button">Imprimer / PDF</button></div></div>
   </div>
+  <div class="modal-backdrop hidden" id="refundPaymentModal" role="dialog" aria-modal="true" aria-labelledby="refundPaymentTitle">
+    <div class="modal-card refund-payment-card"><button class="modal-close" data-close="refundPaymentModal" type="button">×</button><p class="eyebrow">Remboursement</p><h2 id="refundPaymentTitle">Choisir le moyen de remboursement</h2><p class="delete-product-name" id="refundSaleLabel"></p><label class="form-label">Moyen utilisé<select id="refundPaymentMethod"><option>Espèces</option><option>Carte bancaire</option><option>Titre repas</option><option>Paiement mixte</option></select></label><p class="modal-note">Le remboursement sera enregistré dans l’historique et déduit du rapport mensuel.</p><div class="receipt-actions"><button class="secondary-action" data-close="refundPaymentModal" type="button">Annuler</button><button class="confirm-payment" id="confirmRefundPayment" type="button">Valider le remboursement</button></div></div>
+  </div>
   <script src="./app.js"></script>
 </body>
 </html>
