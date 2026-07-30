@@ -1,0 +1,16 @@
+# Données locales et fichiers système
+.DS_Store
+Thumbs.db
+
+# Éditeurs
+.vscode/
+.idea/
+
+# Dépendances et sorties de build éventuelles
+node_modules/
+dist/
+build/
+.vercel/
+
+# Fichiers de test locaux
+*.local

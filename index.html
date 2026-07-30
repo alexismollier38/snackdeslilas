@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#40251d" />
+  <title>Snack des Lilas · Caisse</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./image-overrides.css" />
+  <link rel="stylesheet" href="./mvp-overrides.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-lockup">
+        <div class="brand-mark">S<span>D</span>L</div>
+        <div><strong>Snack des Lilas</strong><small>Caisse tactile · Nouvelle-Calédonie</small></div>
+      </div>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <button class="nav-button active" data-screen="caisse" type="button">Caisse</button>
+        <button class="nav-button" data-screen="produits" type="button">Produits</button>
+        <button class="nav-button" data-screen="cloture" type="button">Clôture</button>
+        <button class="nav-button" data-screen="audit" type="button">Audit</button>
+        <button class="nav-button" data-screen="configuration" type="button">Configuration</button>
+        <button class="nav-button" data-screen="sauvegardes" type="button">Sauvegardes</button>
+        <button class="nav-button" data-screen="utilisateurs" type="button">Utilisateurs</button>
+        <button class="nav-button" data-screen="stocks" type="button">Stocks</button>
+        <button class="nav-button" data-screen="commandes" type="button">Commandes</button>
+      </nav>
+      <div class="topbar-status"><span class="status-dot"></span> Hors connexion · données locales</div>
+      <button class="avatar" id="sessionButton" type="button" title="Verrouiller la caisse">MC</button>
+    </header>
+
+    <main class="workspace">
+      <section class="catalog-panel">
+        <div class="section-heading">
+          <div><p class="eyebrow">Bonjour, Marie</p><h1>Nouvelle commande</h1></div>
+          <button class="icon-button" type="button" id="openDashboard">▦ <span>Résumé</span></button>
+        </div>
+        <div class="toolbar">
+          <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Rechercher un produit…" /></label>
+          <div class="sale-modes" id="saleModes">
+            <button class="mode-button active" data-mode="Sur place" type="button">Sur place</button>
+            <button class="mode-button" data-mode="À emporter" type="button">À emporter</button>
+            <button class="mode-button" data-mode="Livraison" type="button">Livraison</button>
+          </div>
+        </div>
+        <nav class="category-tabs" id="categoryTabs" aria-label="Catégories"></nav>
+        <div class="product-grid" id="productGrid"></div>
+      </section>
+
+      <aside class="order-panel">
+        <div class="order-header"><div><p class="eyebrow">Commande en cours</p><h2 id="orderNumber"># 1048</h2></div><div class="order-actions"><button class="discount-button" id="discountButton" type="button">Remise</button><button class="clear-button" id="clearOrder" type="button">Vider</button></div></div>
+        <div class="order-meta"><span id="orderMode">Sur place</span><span class="order-time">Aujourd’hui · <span id="clock"></span></span></div>
+        <div class="order-details"><input id="customerName" type="text" placeholder="Nom client (facultatif)" /><input id="customerPhone" type="tel" placeholder="Téléphone (facultatif)" /><input id="orderNote" type="text" placeholder="Commentaire de commande…" /></div>
+        <div class="order-lines" id="orderLines"><div class="empty-order"><div class="empty-icon">＋</div><strong>Le panier est vide</strong><span>Ajoutez un produit pour commencer</span></div></div>
+        <div class="order-footer">
+          <div class="totals"><div><span>Sous-total</span><strong id="subtotal">0 F</strong></div><div id="discountLine" class="discount-line hidden"><span>Remise <em id="discountLabel"></em></span><strong id="discountAmount">0 F</strong></div><div><span>TGC <em>(configurable)</em></span><strong id="tax">0 F</strong></div><div class="grand-total"><span>Total à payer</span><strong id="total">0 F</strong></div></div>
+          <button class="pay-button" id="payButton" type="button" disabled><span>Encaisser</span><strong id="payTotal">0 F</strong></button>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="paymentModal" role="dialog" aria-modal="true" aria-labelledby="paymentTitle">
+    <div class="modal-card payment-card"><button class="modal-close" data-close="paymentModal" type="button">×</button><p class="eyebrow">Finaliser la commande</p><h2 id="paymentTitle">Choisir le règlement</h2><div class="payment-total" id="modalTotal">0 F</div><div class="payment-options"><button data-payment="Espèces" type="button">💵<span>Espèces</span></button><button data-payment="Carte bancaire" type="button">💳<span>Carte bancaire</span></button><button data-payment="Titre repas" type="button">🎫<span>Titre repas</span></button><button data-payment="Paiement mixte" type="button">＋<span>Paiement mixte</span></button></div><div id="paymentDetail" class="payment-detail"></div><p class="modal-note">Mode démonstration : aucun paiement réel n’est déclenché.</p></div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="dashboardModal" role="dialog" aria-modal="true" aria-labelledby="dashboardTitle">
+    <div class="modal-card dashboard-card"><button class="modal-close" data-close="dashboardModal" type="button">×</button><p class="eyebrow">Vue rapide</p><h2 id="dashboardTitle">Résumé de la journée</h2><div class="stats-grid"><div><span>Chiffre d’affaires</span><strong id="dashRevenue">0 F</strong><small id="dashRevenueNote">Session locale</small></div><div><span>Commandes</span><strong id="dashOrders">0</strong><small id="dashOrdersNote">Aucune vente</small></div><div><span>Panier moyen</span><strong id="dashAverage">0 F</strong><small id="dashAverageNote">Sur 0 commande</small></div><div><span>Article vedette</span><strong id="dashBest">—</strong><small id="dashBestNote">Aucune vente</small></div></div><div class="dashboard-note" id="dashPayments"><span class="status-dot"></span> Aucun paiement enregistré.</div></div>
+  </div>
+  <div class="modal-backdrop hidden" id="productModal" role="dialog" aria-modal="true" aria-labelledby="productTitle">
+    <div class="modal-card wide-card"><button class="modal-close" data-close="productModal" type="button">×</button><p class="eyebrow">Catalogue</p><h2 id="productTitle">Produits disponibles</h2><p class="modal-note">Les modifications sont enregistrées localement dans ce prototype.</p><div class="admin-table" id="productTable"></div></div>
+  </div>
+  <div class="modal-backdrop hidden" id="closingModal" role="dialog" aria-modal="true" aria-labelledby="closingTitle">
+    <div class="modal-card wide-card"><button class="modal-close" data-close="closingModal" type="button">×</button><p class="eyebrow">Gestion de caisse</p><h2 id="closingTitle">Clôture de caisse</h2><div class="closing-status" id="closingStatus"></div><div class="closing-summary" id="closingSummary"></div><button class="pay-button" id="closeCashButton" type="button"><span>Clôturer la journée</span><strong>Rapport Z</strong></button><div class="history-list" id="historyList"></div></div>
+  </div>
+  <div class="modal-backdrop hidden" id="receiptModal" role="dialog" aria-modal="true" aria-labelledby="receiptTitle">
+    <div class="modal-card receipt-card"><button class="modal-close" data-close="receiptModal" type="button">×</button><div class="receipt-brand">SNACK DES LILAS</div><p class="eyebrow">Ticket de démonstration</p><h2 id="receiptTitle">Encaissement enregistré</h2><div id="receiptContent"></div><div class="receipt-actions"><button class="secondary-action" id="printReceipt" type="button">Imprimer</button><button class="pay-button" id="newOrderButton" type="button"><span>Nouvelle commande</span><strong>OK</strong></button></div></div>
+  </div>
+  <div class="modal-backdrop hidden" id="auditModal" role="dialog" aria-modal="true" aria-labelledby="auditTitle">
+    <div class="modal-card wide-card"><button class="modal-close" data-close="auditModal" type="button">×</button><p class="eyebrow">Traçabilité</p><h2 id="auditTitle">Journal d’audit</h2><p class="modal-note">Journal local de démonstration · les ventes validées ne sont pas supprimées.</p><div class="audit-integrity" id="auditIntegrity"></div><div class="audit-list" id="auditList"></div></div>
+  </div>
+  <div class="modal-backdrop hidden" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="modal-card wide-card"><button class="modal-close" data-close="settingsModal" type="button">×</button><p class="eyebrow">Paramètres légaux</p><h2 id="settingsTitle">Établissement</h2><div class="settings-form"><label class="form-label">Raison sociale<input id="businessName" type="text" /></label><label class="form-label">RIDET<input id="businessRidet" type="text" placeholder="À renseigner" /></label><label class="form-label">Adresse<input id="businessAddress" type="text" /></label><div class="settings-two"><label class="form-label">Téléphone<input id="businessPhone" type="text" /></label><label class="form-label">E-mail<input id="businessEmail" type="email" /></label></div><label class="form-label">Taux TGC applicables<input id="businessTaxRates" type="text" placeholder="À valider localement" /></label><button class="confirm-payment" id="saveSettings" type="button">Enregistrer la configuration</button><p class="modal-note" id="settingsSaved"></p></div></div>
+  </div>
+  <div class="modal-backdrop hidden" id="backupModal" role="dialog" aria-modal="true" aria-labelledby="backupTitle">
+    <div class="modal-card wide-card"><button class="modal-close" data-close="backupModal" type="button">×</button><p class="eyebrow">Données</p><h2 id="backupTitle">Sauvegardes et exports</h2><p class="modal-note">Les fichiers sont générés localement. Une sauvegarde ne remplace pas une procédure validée avec l’expert-comptable.</p><div class="backup-actions"><button id="exportCsv" type="button"><strong>CSV</strong><span>Exporter les ventes</span></button><button id="exportJson" type="button"><strong>JSON</strong><span>Sauvegarder toutes les données</span></button><button id="exportAudit" type="button"><strong>Audit</strong><span>Exporter le journal</span></button><button id="importJson" type="button"><strong>↥</strong><span>Restaurer une sauvegarde</span></button></div><input id="backupFile" type="file" accept="application/json" hidden /><p class="modal-note" id="backupMessage"></p></div>
+  </div>
+  <div class="modal-backdrop hidden" id="usersModal" role="dialog" aria-modal="true" aria-labelledby="usersTitle">
+    <div class="modal-card wide-card"><button class="modal-close" data-close="usersModal" type="button">×</button><p class="eyebrow">Accès et permissions</p><h2 id="usersTitle">Utilisateurs</h2><div class="users-list" id="usersList"></div><div class="user-create"><h3>Ajouter un utilisateur</h3><div class="settings-two"><label class="form-label">Nom<input id="newUserName" type="text" placeholder="Ex. Paul" /></label><label class="form-label">Rôle<select id="newUserRole"><option>Caissier</option><option>Responsable</option><option>Administrateur</option></select></label></div><button class="confirm-payment" id="createUser" type="button">Créer le compte</button><p class="modal-note" id="userMessage"></p></div></div>
+  </div>
+  <div class="modal-backdrop hidden" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <div class="modal-card login-card"><div class="brand-mark login-mark">S<span>D</span>L</div><p class="eyebrow">Accès sécurisé</p><h2 id="loginTitle">Déverrouiller la caisse</h2><p class="modal-note">Sélectionnez un rôle puis saisissez le PIN de démonstration.</p><div class="role-selector"><button data-login-role="Responsable" type="button">Responsable</button><button data-login-role="Caissier" type="button">Caissier</button></div><label class="form-label">PIN<input id="loginPin" type="password" inputmode="numeric" maxlength="4" placeholder="••••" /></label><button class="confirm-payment" id="unlockButton" type="button">Déverrouiller</button><p class="modal-note" id="loginMessage">Responsable : 1234 · Caissier : 1111</p></div>
+  </div>
+  <div class="modal-backdrop hidden" id="stockModal" role="dialog" aria-modal="true" aria-labelledby="stockTitle">
+    <div class="modal-card wide-card"><button class="modal-close" data-close="stockModal" type="button">×</button><p class="eyebrow">Inventaire</p><h2 id="stockTitle">Gestion des stocks</h2><p class="modal-note">Ajustements locaux de démonstration · seuil d’alerte fixé à 5 unités.</p><div class="stock-summary" id="stockSummary"></div><div class="stock-table" id="stockTable"></div></div>
+  </div>
+  <div class="modal-backdrop hidden" id="ordersModal" role="dialog" aria-modal="true" aria-labelledby="ordersTitle">
+    <div class="modal-card wide-card"><button class="modal-close" data-close="ordersModal" type="button">×</button><p class="eyebrow">Production</p><h2 id="ordersTitle">Commandes à préparer</h2><div class="order-queue" id="orderQueue"></div></div>
+  </div>
+  <div class="modal-backdrop hidden" id="discountModal" role="dialog" aria-modal="true" aria-labelledby="discountTitle">
+    <div class="modal-card"><button class="modal-close" data-close="discountModal" type="button">×</button><p class="eyebrow">Autorisation responsable</p><h2 id="discountTitle">Appliquer une remise</h2><label class="form-label">Code PIN responsable<input id="managerPin" type="password" inputmode="numeric" maxlength="4" placeholder="••••" /></label><div class="discount-options"><button data-discount="5" type="button">5 %</button><button data-discount="10" type="button">10 %</button><button data-discount="20" type="button">20 %</button></div><p class="modal-note" id="discountError">PIN de démonstration : 1234</p></div>
+  </div>
+  <script src="./app.js"></script>
+</body>
+</html>

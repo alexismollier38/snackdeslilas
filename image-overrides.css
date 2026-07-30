@@ -1,0 +1,7 @@
+.product-card{min-height:218px;padding:0;overflow:hidden}
+.product-card:hover{background:#fffaf5}
+.product-image{display:block;width:100%;height:92px;object-fit:cover}
+.product-content{position:relative;min-height:126px;padding:12px 13px 14px}
+.product-kicker{margin-bottom:7px}
+.product-card h3{margin-bottom:5px}
+.product-price{bottom:13px;right:13px}
