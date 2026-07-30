@@ -14,3 +14,5 @@ build/
 
 # Fichiers de test locaux
 *.local
+
+.vercel
