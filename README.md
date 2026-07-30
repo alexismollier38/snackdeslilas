@@ -31,6 +31,7 @@ Ouvrir `index.html` dans un navigateur moderne. Aucun serveur ni dépendance n�
 - suivi des stocks, alertes de seuil bas et ajustements audités.
 - nom, téléphone et commentaire facultatifs sur chaque commande.
 - file de préparation des commandes avec statuts À préparer, Prête, Appelée et Terminée.
+- ajout de produits et modification des prix depuis l’administration du catalogue.
 
 ## À ne pas considérer comme production
 
