@@ -111,6 +111,9 @@
   <div class="modal-backdrop hidden" id="productDeleteModal" role="dialog" aria-modal="true" aria-labelledby="productDeleteTitle">
     <div class="modal-card product-delete-card"><button class="modal-close" data-close="productDeleteModal" type="button">×</button><p class="eyebrow">Catalogue</p><h2 id="productDeleteTitle">Supprimer le produit ?</h2><p class="delete-product-name" id="deleteProductName"></p><p class="modal-note">Le produit sera retiré du catalogue. Les ventes historiques et leur traçabilité seront conservées.</p><div class="receipt-actions"><button class="secondary-action" data-close="productDeleteModal" type="button">Annuler</button><button class="confirm-payment delete-confirm" id="confirmProductDelete" type="button">Supprimer définitivement</button></div></div>
   </div>
+  <div class="modal-backdrop hidden" id="monthlyReportModal" role="dialog" aria-modal="true" aria-labelledby="monthlyReportTitle">
+    <div class="modal-card wide-card monthly-report-card"><button class="modal-close" data-close="monthlyReportModal" type="button">×</button><p class="eyebrow">Comptabilité</p><h2 id="monthlyReportTitle">Rapport mensuel des ventes</h2><p class="modal-note">Les ventes remboursées et annulées sont automatiquement exclues du rapport.</p><label class="form-label">Mois à exporter<input id="reportMonth" type="month" /></label><div class="monthly-report-preview" id="monthlyReportPreview"></div><div class="receipt-actions"><button class="secondary-action" data-close="monthlyReportModal" type="button">Fermer</button><button class="confirm-payment" id="printMonthlyReport" type="button">Imprimer / PDF</button></div></div>
+  </div>
   <script src="./app.js"></script>
 </body>
 </html>
