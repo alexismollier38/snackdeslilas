@@ -130,3 +130,21 @@ const imageToDataUrl=(file,done)=>{if(!file)return;const reader=new FileReader()
 $('#createProduct').addEventListener('click',()=>{const file=$('#newProductImage').files[0];const count=products.length;if(!file)return;imageToDataUrl(file,dataUrl=>{const product=products.length>count?products[products.length-1]:null;if(!product)return;product.image=dataUrl;state.catalog=products.map(item=>({...item}));audit('Image produit ajoutée',product.name);save();$('#newProductImage').value='';renderProductTable();renderProducts();});});
 $('#saveProductEdit').addEventListener('click',()=>{const file=$('#editProductImage').files[0];const id=editingProductId;if(!file||id===null)return;imageToDataUrl(file,dataUrl=>{const product=products.find(item=>item.id===id);if(!product)return;product.image=dataUrl;state.catalog=products.map(item=>({...item}));audit('Image produit modifiée',product.name);save();$('#editProductImage').value='';renderProductTable();renderProducts();});});
 const baseProductRenderWithImage=renderProducts;renderProducts=function(){baseProductRenderWithImage();document.querySelectorAll('.product-card[data-product]').forEach(card=>{const product=products.find(item=>item.id===Number(card.dataset.product));const image=card.querySelector('.product-image');if(product&&image&&product.image)image.src=product.image;});};renderProducts();
+const requestedProducts=[
+  {id:1001,name:'Œufs mimosa',price:600,category:'Plats à emporter',desc:'Préparation maison'},
+  {id:1002,name:'Salade tahitienne',price:1000,category:'Plats à emporter',desc:'Salade fraîche'},
+  {id:1003,name:'Salade chinoise',price:1000,category:'Plats à emporter',desc:'Salade fraîche'},
+  {id:1004,name:'Salade jambon/melon',price:1000,category:'Plats à emporter',desc:'Salade fraîche'},
+  {id:1005,name:'Poé',price:600,category:'Plats à emporter',desc:'Préparation maison'},
+  {id:1006,name:'Verrine mascarpone/fruit',price:600,category:'Desserts',desc:'Dessert'},
+  {id:1007,name:'Rouleaux de printemps',price:1200,category:'Plats à emporter',desc:'Préparation maison'},
+  {id:1008,name:'Sushi',price:1200,category:'Plats à emporter',desc:'Préparation maison'},
+  {id:1009,name:'Gâteau à l’ananas',price:500,category:'Desserts',desc:'Dessert'},
+  {id:1010,name:'Bun boh',price:1200,category:'Plats à emporter',desc:'Préparation maison'},
+  {id:1011,name:'Banh cuon',price:1200,category:'Plats à emporter',desc:'Préparation maison'}
+];
+let catalogueChanged=false;
+const existingRiz=products.find(product=>product.name==='Riz cantonais');if(existingRiz&&existingRiz.price!==600){existingRiz.price=600;catalogueChanged=true;}
+const existingCesar=products.find(product=>product.name==='Salade César');if(existingCesar&&existingCesar.price!==1000){existingCesar.price=1000;catalogueChanged=true;}
+requestedProducts.forEach(product=>{if(products.some(item=>item.name.toLowerCase()===product.name.toLowerCase()))return;products.push({...product,emoji:'🍽️',supplierId:null,supplierRate:0});state.stock[product.id]=20;catalogueChanged=true;});
+if(catalogueChanged){state.catalog=products.map(product=>({...product}));save();renderProductTable();renderProducts();}
