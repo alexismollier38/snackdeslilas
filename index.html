@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#40251d" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Snack des Lilas" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./logo-snack-des-lilas.png" />
   <title>Snack des Lilas · Caisse</title>
   <link rel="stylesheet" href="./styles.css" />
   <link rel="stylesheet" href="./image-overrides.css" />
@@ -91,8 +97,8 @@
   <div class="modal-backdrop hidden" id="usersModal" role="dialog" aria-modal="true" aria-labelledby="usersTitle">
     <div class="modal-card wide-card"><button class="modal-close" data-close="usersModal" type="button">×</button><p class="eyebrow">Accès et permissions</p><h2 id="usersTitle">Utilisateurs</h2><div class="users-list" id="usersList"></div><div class="user-create"><h3>Ajouter un utilisateur</h3><div class="settings-two"><label class="form-label">Nom<input id="newUserName" type="text" placeholder="Ex. Paul" /></label><label class="form-label">Rôle<select id="newUserRole"><option>Caissier</option><option>Responsable</option><option>Administrateur</option></select></label></div><button class="confirm-payment" id="createUser" type="button">Créer le compte</button><p class="modal-note" id="userMessage"></p></div></div>
   </div>
-  <div class="modal-backdrop hidden" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-    <div class="modal-card login-card"><img class="login-logo" src="./logo-snack-des-lilas.png" alt="Snack des Lilas" /><p class="eyebrow">Accès sécurisé</p><h2 id="loginTitle">Déverrouiller la caisse</h2><p class="modal-note">Sélectionnez un rôle puis saisissez le PIN de démonstration.</p><div class="role-selector"><button data-login-role="Responsable" type="button">Responsable</button><button data-login-role="Caissier" type="button">Caissier</button></div><label class="form-label">PIN<input id="loginPin" type="password" inputmode="numeric" maxlength="4" placeholder="••••" /></label><button class="confirm-payment" id="unlockButton" type="button">Déverrouiller</button><p class="modal-note" id="loginMessage">Responsable : 1234 · Caissier : 1111</p></div>
+  <div class="modal-backdrop" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <div class="modal-card login-card"><img class="login-logo" src="./logo-snack-des-lilas.png" alt="Snack des Lilas" /><p class="eyebrow">Accès sécurisé</p><h2 id="loginTitle">Déverrouiller la caisse</h2><p class="modal-note">Sélectionnez votre rôle puis saisissez votre code PIN pour accéder au logiciel.</p><div class="role-selector"><button data-login-role="Responsable" type="button">Responsable</button><button data-login-role="Caissier" type="button">Caissier</button></div><label class="form-label">PIN<input id="loginPin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••" /></label><button class="confirm-payment" id="unlockButton" type="button">Déverrouiller</button><p class="modal-note" id="loginMessage">Code PIN requis.</p></div>
   </div>
   <div class="modal-backdrop hidden" id="invoiceModal" role="dialog" aria-modal="true" aria-labelledby="invoiceTitle">
     <div class="modal-card invoice-card"><button class="modal-close" data-close="invoiceModal" type="button">×</button><p class="eyebrow">Document client</p><h2 id="invoiceTitle">Générer une facture</h2><div class="settings-two"><label class="form-label">Client<input id="invoiceCustomer" type="text" placeholder="Nom du client" /></label><label class="form-label">Téléphone<input id="invoicePhone" type="text" placeholder="Facultatif" /></label></div><label class="form-label">Adresse de facturation<input id="invoiceAddress" type="text" placeholder="Adresse du client professionnel" /></label><div class="invoice-preview" id="invoicePreview"></div><div class="receipt-actions"><button class="secondary-action" id="backToReceipt" type="button">Retour au ticket</button><button class="secondary-action" id="printInvoice" type="button">Imprimer la facture</button><button class="confirm-payment" id="saveInvoice" type="button">Enregistrer l’aperçu</button></div><p class="modal-note" id="invoiceMessage">Les mentions fiscales doivent être validées avant production.</p></div>
@@ -124,6 +130,12 @@
   <div class="modal-backdrop hidden" id="supplierReportModal" role="dialog" aria-modal="true" aria-labelledby="supplierReportTitle">
     <div class="modal-card wide-card monthly-report-card"><button class="modal-close" data-close="supplierReportModal" type="button">×</button><p class="eyebrow">Comptabilité fournisseur</p><h2 id="supplierReportTitle">Rapport fournisseurs du jour</h2><p class="modal-note">Le montant dû correspond à la part fournisseur après déduction de votre commission. Les ventes remboursées et annulées sont exclues.</p><label class="form-label">Journée à exporter<input id="supplierReportDate" type="date" /></label><div class="monthly-report-preview" id="supplierReportPreview"></div><div class="receipt-actions"><button class="secondary-action" data-close="supplierReportModal" type="button">Fermer</button><button class="confirm-payment" id="printSupplierReport" type="button">Imprimer / PDF</button></div></div>
   </div>
+  <script src="./supabase-config.js"></script>
   <script src="./app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+    }
+  </script>
 </body>
 </html>

@@ -1,0 +1,13 @@
+{
+  "name": "Snack des Lilas · Caisse",
+  "short_name": "Snack des Lilas",
+  "description": "Caisse tactile hors connexion pour Snack des Lilas",
+  "lang": "fr-FR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f5f1eb",
+  "theme_color": "#40251d",
+  "icons": [{"src":"./logo-snack-des-lilas.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]
+}
