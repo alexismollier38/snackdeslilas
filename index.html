@@ -26,6 +26,7 @@
         <button class="nav-button" data-screen="utilisateurs" type="button">Utilisateurs</button>
         <button class="nav-button" data-screen="stocks" type="button">Stocks</button>
         <button class="nav-button" data-screen="commandes" type="button">Commandes</button>
+        <button class="nav-button" data-screen="fournisseurs" type="button">Fournisseurs</button>
       </nav>
       <div class="topbar-status"><span class="status-dot"></span> Hors connexion · données locales</div>
       <button class="avatar" id="sessionButton" type="button" title="Verrouiller la caisse">MC</button>
@@ -116,6 +117,12 @@
   </div>
   <div class="modal-backdrop hidden" id="refundPaymentModal" role="dialog" aria-modal="true" aria-labelledby="refundPaymentTitle">
     <div class="modal-card refund-payment-card"><button class="modal-close" data-close="refundPaymentModal" type="button">×</button><p class="eyebrow">Remboursement</p><h2 id="refundPaymentTitle">Choisir le moyen de remboursement</h2><p class="delete-product-name" id="refundSaleLabel"></p><label class="form-label">Moyen utilisé<select id="refundPaymentMethod"><option>Espèces</option><option>Carte bancaire</option><option>Titre repas</option><option>Paiement mixte</option></select></label><label class="form-label">Motif du remboursement<textarea id="refundReason" rows="3" placeholder="Ex. Client non servi, erreur de commande…"></textarea></label><p class="modal-note">Le remboursement sera enregistré dans l’historique et déduit du rapport mensuel.</p><div class="receipt-actions"><button class="secondary-action" data-close="refundPaymentModal" type="button">Annuler</button><button class="confirm-payment" id="confirmRefundPayment" type="button">Valider le remboursement</button></div></div>
+  </div>
+  <div class="modal-backdrop hidden" id="suppliersModal" role="dialog" aria-modal="true" aria-labelledby="suppliersTitle">
+    <div class="modal-card wide-card supplier-card"><button class="modal-close" data-close="suppliersModal" type="button">×</button><p class="eyebrow">Partenaires</p><h2 id="suppliersTitle">Fournisseurs et plats délégués</h2><p class="modal-note">Pour chaque plat vendu pour le compte d’un fournisseur, indiquez votre commission. Elle sera figée dans chaque vente.</p><div class="supplier-create"><h3>Ajouter un fournisseur</h3><div class="settings-two"><label class="form-label">Nom du fournisseur<input id="newSupplierName" type="text" placeholder="Ex. Chez Paul" /></label><label class="form-label">Votre commission (%)<input id="newSupplierRate" type="number" min="0" max="100" step="1" value="20" /></label></div><button class="confirm-payment" id="createSupplier" type="button">Ajouter le fournisseur</button><p class="modal-note" id="supplierMessage"></p></div><div class="supplier-list" id="supplierList"></div></div>
+  </div>
+  <div class="modal-backdrop hidden" id="supplierReportModal" role="dialog" aria-modal="true" aria-labelledby="supplierReportTitle">
+    <div class="modal-card wide-card monthly-report-card"><button class="modal-close" data-close="supplierReportModal" type="button">×</button><p class="eyebrow">Comptabilité fournisseur</p><h2 id="supplierReportTitle">Rapport fournisseurs du jour</h2><p class="modal-note">Le montant dû correspond à la part fournisseur après déduction de votre commission. Les ventes remboursées et annulées sont exclues.</p><label class="form-label">Journée à exporter<input id="supplierReportDate" type="date" /></label><div class="monthly-report-preview" id="supplierReportPreview"></div><div class="receipt-actions"><button class="secondary-action" data-close="supplierReportModal" type="button">Fermer</button><button class="confirm-payment" id="printSupplierReport" type="button">Imprimer / PDF</button></div></div>
   </div>
   <script src="./app.js"></script>
 </body>
